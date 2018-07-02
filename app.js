@@ -26,7 +26,9 @@ app.post("/pizza", (req, res) => {
 
 app.put("/pizza/:id", (req, res) => {
   pizzas = pizzas.map(pizza => {
-    if (pizza.id == req.params.id) return Object.assign(pizza, req.body);
+    const idOfRequestedPizza = req.params.id
+    
+    if (pizza.id === idOfRequestedPizza) return Object.assign(pizza, req.body);
     else return pizza;
   });
 
