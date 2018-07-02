@@ -2,7 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 let pizzas = [
   { id: "1", name: "pepperoni pizza", price: 20 },
@@ -26,8 +26,8 @@ app.post("/pizza", (req, res) => {
 
 app.put("/pizza/:id", (req, res) => {
   pizzas = pizzas.map(pizza => {
-    const idOfRequestedPizza = req.params.id
-    
+    const idOfRequestedPizza = req.params.id;
+
     if (pizza.id === idOfRequestedPizza) return Object.assign(pizza, req.body);
     else return pizza;
   });
