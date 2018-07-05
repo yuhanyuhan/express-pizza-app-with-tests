@@ -1,8 +1,8 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const app = express();
-
 const PORT = process.env.PORT || 3000;
+
+const app = express();
 
 let pizzas = [
   { id: "1", name: "pepperoni pizza", price: 20 },
@@ -11,35 +11,35 @@ let pizzas = [
 
 app.use(bodyParser());
 
-app.get("/pizza", (req, res) => {
-  res.send(pizzas);
+app.get("/", (req, res) => {
+  res.json("hello pizzas");
+});
+app.get("/pizzas", (req, res) => {
+  res.json(pizzas);
 });
 
-app.get("/pizza/:id", (req, res) => {
-  res.send(pizzas.find(element => element.id == req.params.id));
+app.get("/pizzas/:id", (req, res) => {
+  res.json(pizzas.find(element => element.id == req.params.id));
 });
 
-app.post("/pizza", (req, res) => {
+app.post("/pizzas", (req, res) => {
   pizzas = [...pizzas, req.body];
-  res.send(pizzas);
+  res.json(req.body);
 });
 
-app.put("/pizza/:id", (req, res) => {
+app.put("/pizzas/:id", (req, res) => {
   pizzas = pizzas.map(pizza => {
     const idOfRequestedPizza = req.params.id;
-
     if (pizza.id === idOfRequestedPizza) return Object.assign(pizza, req.body);
     else return pizza;
   });
 
-  res.send(pizzas);
+  res.json(pizzas);
 });
 
 app.delete("/pizza/:id", (req, res) => {
   pizzas = pizzas.filter(pizza => pizza.id != req.params.id);
-  res.send(pizzas);
+  res.json(pizzas);
 });
 
-app.listen(PORT, () => {
-  console.log(`awesome express pizza app has started on PORT ${PORT}`);
-});
+module.exports = app 
